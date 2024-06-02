@@ -1,29 +1,35 @@
 import Header from "./components/Header";
 import UserInput from "./components/UserInput";
 import Result from "./components/Result";
-import { calculateInvestmentResults } from "./util/investment";
 import { useState } from "react";
 
 const INIT_DATA = {
-  initialInvestment: 0,
-  annualInvestment: 0,
-  expectedReturn: 0,
-  duration: 0,
+  initialInvestment: 10000,
+  annualInvestment: 1200,
+  expectedReturn: 6,
+  duration: 10,
 };
 
 function App() {
-  const [investmentResult, setInvestmentResult] = useState([]);
-  const handleUserInput = function (userInput) {
-    setInvestmentResult((oldRes) => {
-      const result = calculateInvestmentResults(userInput);
-      return result;
+  const [inputData, setInputData] = useState({ ...INIT_DATA });
+
+  const isValid = inputData.duration >= 1;
+
+  const handleUserInput = function (userInput, field) {
+    setInputData((oldData) => {
+      const newData = {
+        ...oldData,
+        [field]: Number(userInput),
+      };
+      return newData;
     });
   };
+
   return (
     <main>
       <Header />
-      <UserInput onUserInput={handleUserInput} />
-      <Result investmentResult={investmentResult} />
+      <UserInput onUserInput={handleUserInput} inputData={inputData} />
+      {isValid && <Result inputData={inputData} />}
     </main>
   );
 }

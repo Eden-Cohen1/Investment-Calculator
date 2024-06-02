@@ -38,7 +38,6 @@ body {
   background: linear-gradient(180deg, #307e6c, #2b996d);
   display: flex;
   flex-direction: column;
-  gap: 2rem;
 }
 
 .input-group {
